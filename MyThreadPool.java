@@ -142,7 +142,7 @@ public class MyThreadPool extends Thread implements IThreadPool {
      */
     @Override
     public void run() {
-       // 保证在线程a将其修改为true时，线程b可以立刻得知
+       // 保证在线程将其修改为true时，其他线程可以立刻得知
         while (!destroyed) {
             try {
                 TimeUnit.MILLISECONDS.sleep(1000);
@@ -182,22 +182,12 @@ public class MyThreadPool extends Thread implements IThreadPool {
                             release--;
                         }
                         size = coreSize;
-
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
     }
-
-
-    /**
-     * 任务有四种状态
-     */
-    /*private enum TaskState {
-        FREE, RUNNING, BLOCKED, DEAD
-    }*/
 
     /**
      * 内部类 将runnable封装为task执行
@@ -208,11 +198,6 @@ public class MyThreadPool extends Thread implements IThreadPool {
         public WorkerTask(String name) {
             super(name);
         }
-
-        /*public TaskState getTaskState() {
-            return taskState;
-        }*/
-
         /**
          * 运行任务队列中的任务
          */
@@ -243,5 +228,4 @@ public class MyThreadPool extends Thread implements IThreadPool {
             }
         }
     }
-
 }
